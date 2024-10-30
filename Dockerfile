@@ -25,7 +25,9 @@ RUN dnf -y --nogpgcheck update \
     zlib-devel \
     libgcrypt-devel \
     e2fsprogs-libs \
-    libgpg-error-devel
+    libgpg-error-devel \
+    libacl-devel \
+    libselinux-devel
 
 COPY libgcrypt.pc /usr/lib64/pkgconfig/
 COPY aide.conf /usr/local/etc/
@@ -35,7 +37,7 @@ RUN curl -L https://github.com/aide/aide/releases/download/v${AIDE_VERSION}/aide
 
 WORKDIR /aide-${AIDE_VERSION}
 
-RUN ./configure && make && make install 
+RUN ./configure --with-zlib --with-posix-acl --with-selinux --with-xattr && make && make install 
 
 FROM almalinux:8.10
 COPY --from=build /usr/local/bin/aide /usr/local/bin/aide
