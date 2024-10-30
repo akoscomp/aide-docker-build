@@ -1,4 +1,4 @@
-FROM almalinux:8.10 AS build
+FROM almalinux:9 AS build
 
 ENV AIDE_VERSION=0.18.8
 
@@ -23,11 +23,18 @@ RUN dnf -y --nogpgcheck update \
     pkg-config \
     pkgconf-m4 \
     zlib-devel \
-    libgcrypt-devel
+    libgcrypt-devel \
+    e2fsprogs-libs \
+    libgpg-error-devel
+
+COPY libgcrypt.pc /usr/lib64/pkgconfig/
+COPY aide.conf /usr/local/etc/
 
 RUN curl -L https://github.com/aide/aide/releases/download/v${AIDE_VERSION}/aide-${AIDE_VERSION}.tar.gz > /aide.tar.gz \
   && tar -xf /aide.tar.gz && rm /aide.tar.gz
 
 WORKDIR /aide-${AIDE_VERSION}
 
-RUN ./configure --with-gcrypt
+RUN ./configure
+RUN make
+RUN make install
