@@ -1,4 +1,4 @@
-FROM almalinux:9 AS build
+FROM almalinux:8.10 AS build
 
 ENV AIDE_VERSION=0.18.8
 
