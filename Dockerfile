@@ -29,4 +29,4 @@ RUN dnf -y --nogpgcheck install \
 COPY aide/ /src
 WORKDIR /src
 
-RUN ./autogen.sh
+#RUN ./autogen.sh
