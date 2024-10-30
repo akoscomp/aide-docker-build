@@ -42,8 +42,8 @@ COPY --from=build /usr/local/bin/aide /usr/local/bin/aide
 COPY --from=build /usr/local/share/man/man1/aide.1 /usr/local/share/man/man1/aide.1
 COPY --from=build /usr/local/share/man/man5/aide.conf.5 /usr/local/share/man/man5/aide.conf.5
 
-COPY aide.conf /usr/local/etc/
-
 RUN mkdir -p /var/log/aide && touch /var/log/aide/aide.log && mkdir -p /var/lib/aide
+
+COPY aide.conf /usr/local/etc/
 
 RUN aide --init && cp /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
