@@ -21,7 +21,6 @@ RUN dnf -y --nogpgcheck install \
     pcre-devel \
     pkg-config \
     pkgconf-m4 \
-    protobuf-compiler \
     wget \
     xz \
     zip
@@ -29,4 +28,4 @@ RUN dnf -y --nogpgcheck install \
 COPY aide/ /src
 WORKDIR /src
 
-#RUN ./autogen.sh
+RUN ./autogen.sh
